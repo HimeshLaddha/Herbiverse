@@ -1,10 +1,10 @@
-import React, { useState, useContext, useEffect , useRef } from "react";
+import React, { useState, useContext, useEffect, useRef } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
 import { AuthContext } from "../../context/AuthContext"; // Update path as needed
-import { 
-  UserAvatar, 
-  getUserName, 
-  UserMenuDropdown, 
+import {
+  UserAvatar,
+  getUserName,
+  UserMenuDropdown,
   ProfilePopup,
   MobileUserSection
 } from "./ProfileComponents";
@@ -26,12 +26,12 @@ function Header() {
   // Refresh user profile when component mounts if authenticated
   const hasRefreshed = useRef(false);
 
-useEffect(() => {
-  if (isAuthenticated && !hasRefreshed.current) {
-    refreshUserProfile();
-    hasRefreshed.current = true; // Prevents further unnecessary calls
-  }
-}, [isAuthenticated]);
+  useEffect(() => {
+    if (isAuthenticated && !hasRefreshed.current) {
+      refreshUserProfile();
+      hasRefreshed.current = true; // Prevents further unnecessary calls
+    }
+  }, [isAuthenticated]);
 
 
   const toggleMobileMenu = () => {
@@ -47,7 +47,7 @@ useEffect(() => {
     if (isAuthenticated && !profilePopupOpen) {
       await refreshUserProfile();
     }
-    
+
     setProfilePopupOpen(!profilePopupOpen);
     // Close user menu if it's open
     if (userMenuOpen) {
@@ -66,14 +66,14 @@ useEffect(() => {
       const userMenu = document.getElementById('user-menu-container');
       const profilePopup = document.getElementById('profile-popup-container');
       const mobileProfilePopup = document.getElementById('profile-popup-container-mobile');
-      
+
       if (userMenu && !userMenu.contains(event.target) && userMenuOpen) {
         setUserMenuOpen(false);
       }
-      
+
       if (
-        ((profilePopup && !profilePopup.contains(event.target)) || 
-        (mobileProfilePopup && !mobileProfilePopup.contains(event.target))) && 
+        ((profilePopup && !profilePopup.contains(event.target)) ||
+          (mobileProfilePopup && !mobileProfilePopup.contains(event.target))) &&
         profilePopupOpen
       ) {
         setProfilePopupOpen(false);
@@ -89,7 +89,7 @@ useEffect(() => {
   // Attempt to get user data from localStorage if not available in context
   const getEffectiveUser = () => {
     if (user && Object.keys(user).length > 0) return user;
-    
+
     try {
       const storedUserData = localStorage.getItem('userData');
       if (storedUserData) {
@@ -98,18 +98,23 @@ useEffect(() => {
     } catch (e) {
       console.error('Error retrieving user data from localStorage', e);
     }
-    
+
     return null;
   };
-  
+
   const effectiveUser = getEffectiveUser();
 
   return (
     <nav className="fixed top-0 left-0 w-full flex flex-col bg-[#F9FAF5] text-[#136b32] font-merriwether shadow-md z-50">
       <div className="flex w-full items-center px-4 py-4">
         {/* Logo */}
-        <NavLink to="/" className="text-2xl font-bold">
-          HERBIVERSE
+        <NavLink to="/" className="flex items-center space-x-2">
+          <img
+            src="/logo/logo.png"
+            alt="HerbiVerse Logo"
+            className="h-14 w-14 object-contain scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
+          />
+          <span className="text-2xl font-bold">HERBIVERSE</span>
         </NavLink>
 
         {/* Desktop Navigation Links */}
@@ -127,8 +132,8 @@ useEffect(() => {
         <div className="hidden md:flex items-center ml-auto">
           {isAuthenticated ? (
             <div id="user-menu-container" className="relative">
-              <button 
-                onClick={toggleUserMenu} 
+              <button
+                onClick={toggleUserMenu}
                 className="flex items-center space-x-2 bg-green-100 hover:bg-green-200 px-4 py-2 rounded-md"
               >
                 {/* User Avatar */}
@@ -136,29 +141,29 @@ useEffect(() => {
                 <span className="font-medium">
                   {getUserName(effectiveUser)}
                 </span>
-                <svg 
-                  className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`} 
-                  fill="none" 
-                  viewBox="0 0 24 24" 
+                <svg
+                  className={`h-4 w-4 transition-transform ${userMenuOpen ? 'rotate-180' : ''}`}
+                  fill="none"
+                  viewBox="0 0 24 24"
                   stroke="currentColor"
                 >
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
                 </svg>
               </button>
-              
+
               {/* User Dropdown Menu */}
               {userMenuOpen && (
-                <UserMenuDropdown 
+                <UserMenuDropdown
                   user={effectiveUser}
                   toggleProfilePopup={toggleProfilePopup}
                   setUserMenuOpen={setUserMenuOpen}
                   handleLogout={handleLogout}
                 />
               )}
-              
+
               {/* User Profile Popup */}
               {profilePopupOpen && (
-                <ProfilePopup 
+                <ProfilePopup
                   user={effectiveUser}
                   handleLogout={handleLogout}
                   setProfilePopupOpen={setProfilePopupOpen}
@@ -190,42 +195,42 @@ useEffect(() => {
         <div className="md:hidden bg-[#FFFAF7] border-t w-full">
           <div className="flex flex-col px-4 py-4 space-y-4 text-lg font-semibold">
             {isAuthenticated && (
-              <MobileUserSection 
+              <MobileUserSection
                 user={effectiveUser}
                 toggleProfilePopup={toggleProfilePopup}
               />
             )}
-            
+
             <NavLink to="/" className="hover:text-gray-500" onClick={toggleMobileMenu}>HOME</NavLink>
             <NavLink to="/Herbcatalog" className="hover:text-gray-500" onClick={toggleMobileMenu}>HERB CATALOG</NavLink>
             <NavLink to="/virtual-tour" className="hover:text-gray-500" onClick={toggleMobileMenu}>VIRTUAL TOUR</NavLink>
-            
+
             {isAuthenticated && (
               <NavLink to="/favourite" className="hover:text-gray-500" onClick={toggleMobileMenu}>FAVOURITES</NavLink>
             )}
-            
+
             <NavLink to="/AboutUS" className="hover:text-gray-500" onClick={toggleMobileMenu}>ABOUT US</NavLink>
 
             {/* Auth Buttons - Mobile */}
             {isAuthenticated ? (
-              <button 
-                onClick={() => { handleLogout(); toggleMobileMenu(); }} 
+              <button
+                onClick={() => { handleLogout(); toggleMobileMenu(); }}
                 className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600"
               >
                 LOGOUT
               </button>
             ) : (
               <>
-                <NavLink 
-                  to="/login" 
-                  className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600" 
+                <NavLink
+                  to="/login"
+                  className="bg-green-500 text-white px-4 py-2 rounded-md hover:bg-green-600"
                   onClick={toggleMobileMenu}
                 >
                   LOGIN
                 </NavLink>
-                <NavLink 
-                  to="/signup" 
-                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" 
+                <NavLink
+                  to="/signup"
+                  className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600"
                   onClick={toggleMobileMenu}
                 >
                   SIGNUP
@@ -235,10 +240,10 @@ useEffect(() => {
           </div>
         </div>
       )}
-      
+
       {/* Mobile User Profile Popup */}
       {profilePopupOpen && (
-        <ProfilePopup 
+        <ProfilePopup
           user={effectiveUser}
           isMobile={true}
           handleLogout={handleLogout}
