@@ -112,7 +112,7 @@ function Header() {
           <img
             src="/logo/logo.png"
             alt="HerbiVerse Logo"
-            className="h-14 w-14 object-contain scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
+            className="h-12 w-12 object-contain scale-125 hover:scale-150 transition-transform duration-300 ease-in-out"
           />
           <span className="text-2xl font-bold">HERBIVERSE</span>
         </NavLink>
