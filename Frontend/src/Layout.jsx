@@ -4,13 +4,16 @@ import Header from './Components/Header/Header';
 import Footer from './Components/Footer/Footer';
 
 function Layout() {
-      return (
-    <>
-    <Header/>
-    <Outlet/>  
-    <Footer/>
-    </>
-  )
+  return (
+    <div className="flex flex-col min-h-screen">
+      <Header />
+      <main className="flex-grow">
+        <Outlet />
+      </main>
+    </div>
+  );
 }
+
+
 
 export default Layout;

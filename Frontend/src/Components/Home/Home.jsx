@@ -11,6 +11,8 @@ import image4 from "../../assets/image4.png";
 import plantImage from "../../assets/heroimage.png";
 import heroBackground from "../../assets/herobackground.png";
 import HerbCard from '../../Components/Herb/Herbcard';
+import Footer from '../../Components/Footer/Footer.jsx'; // Adjust path based on your folder structure
+
 // Import the plant data from the JSON file
 import plantData from '../../Components/Herb/Getplantdata.json';
 
@@ -358,14 +360,8 @@ function Home() {
           ))}
         </div>
       </section>
-
-      {/* Footer */}
-      <footer className="bg-emerald-600 text-white py-10 mt-16">
-        <div className="text-center">
-          <p className="text-lg">© 2025 Virtual Herbal Garden</p>
-          <p className="mt-2 text-sm">All Rights Reserved</p>
-        </div>
-      </footer>
+    {/* Footer */}
+    <Footer />
     </div>
   );
 }
