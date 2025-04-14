@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Linkedin, Mail, Github, ArrowRight, User } from 'lucide-react';
+import Footer from '../../Components/Footer/Footer.jsx';
+
 import himesh from "/Photos/himesh.jpg"
 import aaditya from "/Photos/Aaditya.jpg"
 import pritik from "/Photos/pritik.jpg"
@@ -280,6 +282,8 @@ const AboutUs = () => {
           </div>
         </motion.div>
       </div>
+      {/* Footer */}
+    <Footer />
     </div>
   );
 };

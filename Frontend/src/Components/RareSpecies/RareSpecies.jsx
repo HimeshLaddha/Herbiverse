@@ -2,6 +2,8 @@ import React, { useState, useMemo } from "react";
 import { useNavigate } from "react-router-dom";
 import HerbCard from "../../Components/Herb/Herbcard";
 import plantData from "../Herb/Getplantdata.json";
+import Footer from '../../Components/Footer/Footer.jsx';
+
 import { FaLeaf, FaSearch, FaFilter } from "react-icons/fa";
 
 function RareSpecies() {
@@ -468,6 +470,8 @@ function RareSpecies() {
           </div>
         </div>
       )}
+      {/* Footer */}
+    <Footer />
     </div>
   );
 }
