@@ -11,6 +11,8 @@ import image4 from "../../assets/image4.png";
 import plantImage from "../../assets/heroimage.png";
 import heroBackground from "../../assets/herobackground.png";
 import HerbCard from '../../Components/Herb/Herbcard';
+// Import the plant data from the JSON file
+import plantData from '../../Components/Herb/Getplantdata.json';
 
 function Home() {
   const [isVisible, setIsVisible] = useState(false);
@@ -26,6 +28,7 @@ function Home() {
     { img: net, name: "Ginger", benefits: "Immunity, Nausea Relief" }
   ];
 
+  // We'll enhance this with full data from Getplantdata.json
   const medicinalPlants = [
     { 
       name: "Aloe Vera", 
@@ -64,8 +67,42 @@ function Home() {
     }
   ];
 
+  // This will store our enhanced plant data with complete information
+  const [enhancedPlantData, setEnhancedPlantData] = useState([]);
+
   useEffect(() => {
     setIsVisible(true);
+
+    // Enhance the medicinal plants with full data from the JSON file
+    const enrichedPlants = medicinalPlants.map(basicPlant => {
+      // Find the matching plant in the full data
+      const fullPlantData = plantData.find(
+        plant => plant.name.toLowerCase() === basicPlant.name.toLowerCase() ||
+                 plant.name.toLowerCase().includes(basicPlant.name.toLowerCase())
+      );
+      
+      // Return the enhanced plant with all details
+      return {
+        ...basicPlant,
+        ...fullPlantData,
+        // Ensure these properties exist even if not in the JSON data
+        description: fullPlantData?.description || basicPlant.description || "Description not available",
+        uses: fullPlantData?.uses || [],
+        warnings: fullPlantData?.warnings || [],
+        careInstructions: fullPlantData?.careInstructions || "Care instructions not available",
+        hindiName: fullPlantData?.hindiName || "",
+        marathiName: fullPlantData?.marathiName || "",
+        family: fullPlantData?.family || "",
+        origin: fullPlantData?.origin || "",
+        type: fullPlantData?.type || "",
+        foundInMaharashtra: fullPlantData?.foundInMaharashtra || [],
+        growingConditions: fullPlantData?.growingConditions || "",
+        // Generate an image path
+        img: fullPlantData?.img || `/plants/${basicPlant.name.toLowerCase().replace(/\s+/g, '')}.jpg`,
+      };
+    });
+    
+    setEnhancedPlantData(enrichedPlants);
 
     // Auto slide for featured plants
     const featuredInterval = setInterval(() => {
@@ -119,79 +156,8 @@ function Home() {
     visible: { opacity: 1, y: 0, transition: { duration: 0.6 } }
   };
 
-  const formatPlantData = () => {
-    // List of all plants that should be displayed
-    const allPlants = [
-      "aloevera", "ashwagandha", "fennel(saunf)", "ginger", 
-      "hibiscus", "tulsi", "turmeric"
-    ];
-    
-    // Use the existing plantData if it matches your requirements,
-    // or create data for the plants that need to be displayed
-    return allPlants.map(plantName => {
-      // Find if the plant exists in the original data
-      const existingPlant = plantData.find(p => 
-        p.name.toLowerCase() === plantName.toLowerCase() ||
-        p.name.toLowerCase().includes(plantName.toLowerCase())
-      );
-      
-      if (existingPlant) {
-        return {
-          ...existingPlant,
-          id: existingPlant.name.toLowerCase().replace(/\s+/g, '_'),
-          image: `/images/${existingPlant.name.toLowerCase().replace(/\s+/g, '_')}.jpg`,
-          category: getCategoriesForPlant(plantName),
-          scientificName: existingPlant.scientificName || getScientificName(plantName)
-        };
-      }
-      
-      // If the plant doesn't exist in original data, create a basic entry
-      return {
-        id: plantName.toLowerCase().replace(/\s+/g, '_'),
-        name: plantName.charAt(0).toUpperCase() + plantName.slice(1),
-        scientificName: getScientificName(plantName),
-        description: "A medicinal plant with various health benefits.",
-        image: `/images/${plantName.toLowerCase().replace(/\s+/g, '_')}.jpg`,
-        careInstructions: "Water regularly and place in partial sunlight.",
-        category: getCategoriesForPlant(plantName)
-      };
-    });
-  };
-
-  // Helper function to assign scientific names to plants
-  const getScientificName = (plantName) => {
-    const scientificNames = {
-      "aloevera": "Aloe barbadensis miller",
-      "ashwagandha": "Withania somnifera",
-      "fennel(saunf)": "Foeniculum vulgare",
-      "ginger": "Zingiber officinale",
-      "hibiscus": "Hibiscus rosa-sinensis",
-      "tulsi": "Ocimum sanctum",
-      "turmeric": "Curcuma longa"
-    };
-    
-    return scientificNames[plantName.toLowerCase()] || "Scientific name unavailable";
-  };
-
-  // Helper function (you'll need to define this or remove the references)
-  const getCategoriesForPlant = (plantName) => {
-    const categories = {
-      "aloevera": ["skin", "healing"],
-      "ashwagandha": ["stress", "immunity"],
-      "fennel(saunf)": ["digestion", "culinary"],
-      "ginger": ["immunity", "digestion"],
-      "hibiscus": ["heart", "skin"],
-      "tulsi": ["respiratory", "stress"],
-      "turmeric": ["inflammation", "immunity"]
-    };
-    
-    return categories[plantName.toLowerCase()] || ["medicinal"];
-  };
-
   return (
     <div className="bg-gradient-to-b from-[#FFFAF7] to-[#DCFCE7] fixed overflow-y-auto inset-0 min-h-screen text-center py-12 px-4">
-
-
       {/* Hero Section */}
       <section className="flex items-center justify-between p-20 pt-24 mt-10 relative overflow-hidden">
         {/* Background image container - positioned absolutely */}
@@ -221,14 +187,14 @@ function Home() {
           </p>
           
           <motion.button
-      className="mt-6 bg-gradient-to-r border-2 from-emerald-600 to-green-500 text-white px-8 py-3 rounded-full flex items-center mx-auto shadow-lg hover:shadow-xl transition-all duration-300" 
-      whileHover={{ scale: 1.05 }}
-      whileTap={{ scale: 0.95 }}
-      onClick={() => navigate("/Herbcatalog")}
-    >
-      Start Exploring <span className="ml-2">→</span>
-    </motion.button>
-    </motion.div>
+            className="mt-6 bg-gradient-to-r border-2 from-emerald-600 to-green-500 text-white px-8 py-3 rounded-full flex items-center mx-auto shadow-lg hover:shadow-xl transition-all duration-300" 
+            whileHover={{ scale: 1.05 }}
+            whileTap={{ scale: 0.95 }}
+            onClick={() => navigate("/Herbcatalog")}
+          >
+            Start Exploring <span className="ml-2">→</span>
+          </motion.button>
+        </motion.div>
         {/* Right Image */}
         <motion.div
           initial={{ opacity: 0, x: 50 }}
@@ -304,8 +270,8 @@ function Home() {
                 }
               }}
             >
-              {/* Duplicate the first few items at the end for seamless looping */}
-              {[...medicinalPlants, ...medicinalPlants.slice(0, 3)].map((plant, index) => (
+              {/* Use the enhanced plant data with complete information */}
+              {[...enhancedPlantData, ...enhancedPlantData.slice(0, 3)].map((plant, index) => (
                 <motion.div
                   key={`plant-${index}`}
                   className="flex-shrink-0"
@@ -333,7 +299,7 @@ function Home() {
 
         {/* Dots for navigation */}
         <div className="flex justify-center mt-6 space-x-2">
-          {medicinalPlants.map((_, index) => (
+          {enhancedPlantData.map((_, index) => (
             <button
               key={index}
               onClick={() => setCurrentMedicinalPlantIndex(index)}

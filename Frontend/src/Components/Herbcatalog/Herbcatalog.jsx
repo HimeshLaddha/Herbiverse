@@ -37,8 +37,21 @@ function Herbcatalog() {
         description: existingPlant?.description || "A medicinal plant with various health benefits.",
         image: `/images/${plantName.toLowerCase().replace(/\s+/g, '_')}.jpg`,
         careInstructions: existingPlant?.careInstructions || "Water regularly and place in partial sunlight.",
-        category: getCategoriesForPlant(plantName)
+        category: getCategoriesForPlant(plantName),
+      
+        // ✅ Regional names
+        hindiName: existingPlant?.hindiName || "",
+        marathiName: existingPlant?.marathiName || "",
+      
+        // ✅ Additional plant details
+        family: existingPlant?.family || "",
+        origin: existingPlant?.origin || "",
+        type: existingPlant?.type || "",
+        foundInMaharashtra: existingPlant?.foundInMaharashtra || [],
+        uses: existingPlant?.uses || [],
+        warnings: existingPlant?.warnings || []
       };
+      
     });
   };
 

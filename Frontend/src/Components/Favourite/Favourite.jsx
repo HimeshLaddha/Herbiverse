@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HerbCard from '../../Components/Herb/Herbcard';
+import plantData from '../../Components/Herb/Getplantdata.json';
+
 
 const Favorites = () => {
   const navigate = useNavigate();
   const [favorites, setFavorites] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState(null);
+  const [selectedPlant, setSelectedPlant] = useState(null);
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -36,7 +39,26 @@ const Favorites = () => {
 
         const data = await response.json();
         console.log('Fetched favorites:', data);
-        setFavorites(data);
+        
+        // Enrich favorites with additional plant data from plantData
+        const enrichedFavorites = data.map(favorite => {
+          if (!favorite.plant) return favorite;
+          
+          // Find the plant in plantData to get all details
+          const fullPlantData = plantData.find(p => 
+            p.name.toLowerCase() === favorite.plant.name.toLowerCase()
+          );
+          
+          return {
+            ...favorite,
+            plant: {
+              ...favorite.plant,
+              ...fullPlantData // Merge the complete plant data
+            }
+          };
+        });
+        
+        setFavorites(enrichedFavorites);
       } catch (error) {
         console.error('Error fetching favourites:', error);
         setError(error.message || 'Failed to load favourites');
@@ -76,6 +98,21 @@ const Favorites = () => {
       setError(error.message || 'Failed to remove from favourites');
     }
   };
+
+  // In Favorites.jsx or any page that opens the modal
+  const handleViewPlant = (plant, viewType) => {
+    localStorage.setItem('returnTo', '/favourite');
+    
+    navigate('/modelviewer', { 
+      state: { 
+        herb: plant,
+        viewType,
+        returnTo: '/favourite' // <--- Add this line
+      } 
+    });
+    
+  };
+  
 
   if (isLoading) {
     return (
@@ -163,19 +200,31 @@ const Favorites = () => {
             id: plant._id,
             name: plant.name,
             scientificName: plant.scientificName,
-            image: `/plants/${plant.name.toLowerCase().replace(/\s+/g, '_')}.jpg`
+            image: `/plants/${plant.name.toLowerCase().replace(/\s+/g, '_')}.jpg`,
+            // Add additional properties from ModelViewer
+            description: plant.description,
+            hindiName: plant.hindiName,
+            marathiName: plant.marathiName,
+            family: plant.family,
+            origin: plant.origin,
+            type: plant.type,
+            foundInMaharashtra: plant.foundInMaharashtra,
+            uses: plant.uses,
+            warnings: plant.warnings,
+            careInstructions: plant.careInstructions,
+            growingConditions: plant.growingConditions
           };
           
           return (
             <div key={favorite._id} className="relative">
-              <HerbCard herb={herbData} />
-              <button 
-                onClick={() => handleRemoveFavorite(plant._id)} 
-                className="absolute -top-2 -right-2 bg-red-600 hover:bg-red-700 text-white rounded-full p-1 w-6 h-6 flex items-center justify-center"
-                title="Remove from favourites"
-              >
-                &times;
-              </button>
+              <div className="transition-all duration-300 transform hover:scale-105">
+                <HerbCard herb={herbData} />
+                
+             
+              
+                
+                
+              </div>
             </div>
           );
         })}

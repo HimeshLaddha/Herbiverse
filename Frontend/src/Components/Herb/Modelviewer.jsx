@@ -299,8 +299,12 @@ const ModelViewer = () => {
 
   // Handle close button click
   const handleClose = () => {
-    navigate('/herbcatalog'); // Navigate back to home or previous page
+    const returnPath = location.state?.returnTo || '/herbcatalog';
+    console.log('Navigating back to:', returnPath);
+    navigate(returnPath);
   };
+  
+  
 
   // Toggle view type
   const toggleViewType = (type) => {
@@ -491,27 +495,120 @@ const ModelViewer = () => {
                         <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Scientific Name</h4>
                         <p className="text-gray-200 text-lg font-medium">{herb.scientificName || "Not available"}</p>
                       </div>
+
+                      {(herb.hindiName || herb.marathiName) && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Regional Names</h4>
+    <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+      {herb.hindiName && (
+        <li>
+          <span className="font-semibold text-green-200">Hindi:</span> {herb.hindiName}
+        </li>
+      )}
+      {herb.marathiName && (
+        <li>
+          <span className="font-semibold text-green-200">Marathi:</span> {herb.marathiName}
+        </li>
+      )}
+    </ul>
+  </div>
+)}
+  
+  {(herb.family || herb.origin || herb.type) && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Plant Details</h4>
+    <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+      {herb.family && (
+        <li>
+          <span className="font-semibold text-green-200">Family:</span> {herb.family}
+        </li>
+      )}
+      {herb.origin && (
+        <li>
+          <span className="font-semibold text-green-200">Origin:</span> {herb.origin}
+        </li>
+      )}
+      {herb.type && (
+        <li>
+          <span className="font-semibold text-green-200">Type:</span> {herb.type}
+        </li>
+      )}
+    </ul>
+  </div>
+)}
+
+{herb.foundInMaharashtra && herb.foundInMaharashtra.length > 0 && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Found in Maharashtra</h4>
+    <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+      {herb.foundInMaharashtra.map((location, index) => (
+        <li key={index}>{location}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+
+
                       
                       {herb.description && (
-                        <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
-                          <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Description</h4>
-                          <p className="text-gray-200">{herb.description}</p>
-                        </div>
-                      )}
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Description</h4>
+    {Array.isArray(herb.description) ? (
+      <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+        {herb.description.map((point, index) => (
+          <li key={index} className="break-words">
+            {point}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-gray-200">{herb.description}</p>
+    )}
+  </div>
+)}
+
+{herb.uses && herb.uses.length > 0 && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Uses</h4>
+    <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+      {herb.uses.map((use, index) => (
+        <li key={index}>{use}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+{herb.warnings && herb.warnings.length > 0 && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-red-300 uppercase tracking-wider mb-1">Warnings</h4>
+    <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+      {herb.warnings.map((warning, index) => (
+        <li key={index}>{warning}</li>
+      ))}
+    </ul>
+  </div>
+)}
+
+{/* Care Instructions Section */}
+{herb.careInstructions && (
+  <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
+    <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Care Instructions</h4>
+    {Array.isArray(herb.careInstructions) ? (
+      <ul className="text-gray-200 space-y-2 text-left list-disc pl-5">
+        {herb.careInstructions.map((point, index) => (
+          <li key={index} className="break-words">
+            {point}
+          </li>
+        ))}
+      </ul>
+    ) : (
+      <p className="text-gray-200">{herb.careInstructions}</p>
+    )}
+  </div>
+)}
                       
-                      {herb.careInstructions && (
-                        <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
-                          <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Care Instructions</h4>
-                          <p className="text-gray-200">{herb.careInstructions}</p>
-                        </div>
-                      )}
-                      
-                      {herb.usages && (
-                        <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
-                          <h4 className="text-sm text-green-300 uppercase tracking-wider mb-1">Common Uses</h4>
-                          <p className="text-gray-200">{herb.usages}</p>
-                        </div>
-                      )}
+  
                       
                       {herb.growingConditions && (
                         <div className="bg-white/5 rounded-lg p-4 border border-green-500/20">
