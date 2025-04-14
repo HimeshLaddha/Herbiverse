@@ -86,7 +86,7 @@ const AboutUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-green-50 to-green-100 py-16 px-4">
+    <div className="bg-gradient-to-b from-[#FFFAF7] to-[#DCFCE7] fixed overflow-y-auto inset-0 min-h-screen text-center py-12 px-4">
       <div className="max-w-6xl mx-auto">
         {/* Page Header */}
         <motion.div 
@@ -95,7 +95,7 @@ const AboutUs = () => {
           transition={{ duration: 0.6 }}
           className="text-center mb-12"
         >
-          <h1 className="text-4xl md:text-5xl font-bold text-green-800 mb-4">
+          <h1 className="text-4xl md:text-5xl font-bold text-green-800 mb-4 mt-14">
             Meet Our Green Team
           </h1>
           <p className="text-xl text-green-600 max-w-2xl mx-auto">

@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import HerbCard from '../../Components/Herb/Herbcard';
 import plantData from '../../Components/Herb/Getplantdata.json';
+import Footer from '../../Components/Footer/Footer.jsx';
 
 
 const Favorites = () => {
@@ -229,6 +230,8 @@ const Favorites = () => {
           );
         })}
       </div>
+      {/* Footer */}
+    <Footer />
     </div>
   );
 };
