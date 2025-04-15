@@ -13,6 +13,7 @@ import Signup from './Components/Signup/Signup.jsx'
 import Favourite from './Components/Favourite/Favourite.jsx'
 import AboutUs from './Components/AboutUS/Aboutus.jsx'
 import { AuthProvider } from "./context/AuthContext.jsx";  // Note: Use named import with curly braces
+import AdminDashboard from './Components/Admin/AdminDashboard.jsx'
 
 const router = createBrowserRouter(
   createRoutesFromElements(
@@ -24,6 +25,7 @@ const router = createBrowserRouter(
       <Route path='/Signup' element={<Signup/>}></Route>
       <Route path='/Favourite' element={<Favourite/>}></Route>
       <Route path='/Aboutus' element={<AboutUs/>}></Route>
+      <Route path='/Admin' element={<AdminDashboard/>}></Route>
       <Route path="/herb/:herbId" element={<ModelViewer />}></Route>
     </Route>
   )

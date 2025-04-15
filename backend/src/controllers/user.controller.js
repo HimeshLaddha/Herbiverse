@@ -79,4 +79,11 @@ const getUserProfile = asyncHandler(async (req, res) => {
   }
 });
 
-module.exports = { registerUser, loginUser, logoutUser, getUserProfile };
+// Get All Users - Admin Only
+const getAllUsers = asyncHandler(async (req, res) => {
+  const users = await User.find().select("-password"); // Exclude password
+  res.json(users);
+});
+
+
+module.exports = { registerUser, loginUser, logoutUser, getUserProfile, getAllUsers };
