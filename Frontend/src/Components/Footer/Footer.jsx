@@ -99,7 +99,7 @@ const Footer = () => {
                 { name: "Herb Catalog", path: "/Herbcatalog" },
                 { name: "About Us", path: "/AboutUs" },
                 { name: "Rare Species", path: "/RareSpecies" },
-                { name: "Favourites", path: "/Favourite" },
+                { name: "Favourites", path: "/favourite" },
               ].map((link, i) => (
                 <li key={i}>
                   <Link 
