@@ -15,12 +15,12 @@ const AdminDashboard = () => {
   }, []);
 
   const fetchPlants = async () => {
-    const res = await axios.get('http://localhost:5000/api/plants');
+    const res = await axios.get(`${process.env.VITE_API_URL}/plants`);
     setPlants(res.data);
   };
 
   const fetchUsers = async () => {
-    const res = await axios.get('http://localhost:5000/api/users/profile');
+    const res = await axios.get(`${process.env.VITE_API_URL}/users/profile`);
     setUsers(res.data);
   };
 
