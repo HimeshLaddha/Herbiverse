@@ -1,4 +1,5 @@
 const express = require("express");
+const serverless = require("serverless-http");
 const dotenv = require("dotenv");
 const cors = require("cors");
 const connectDB = require("./config/db");
@@ -41,3 +42,10 @@ const PORT = process.env.PORT || 8000;
 if (process.env.NODE_ENV !== "production") {
   app.listen(PORT, () => console.log(`🚀 Server running on port ${PORT}`));
 }
+
+app.use(notFound);
+app.use(errorHandler);
+
+// Export app wrapped in serverless handler
+module.exports = app;
+module.exports.handler = serverless(app);
