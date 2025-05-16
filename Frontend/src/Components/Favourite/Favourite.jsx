@@ -26,7 +26,7 @@ const Favorites = () => {
         setIsLoading(true);
         setError(null);
         
-        const response = await fetch(`${process.env.VITE_API_URL}/favourite`, {
+        const response = await fetch('http://localhost:8000/api/favourite', {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
@@ -80,7 +80,7 @@ const Favorites = () => {
       const token = localStorage.getItem('token');
       console.log(`Removing plantId ${plantId} from favourites`);
 
-      const response = await fetch(`${process.env.VITE_API_URL}/favourite/${plantId}`, {
+      const response = await fetch(`http://localhost:8000/api/favourite/${plantId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
