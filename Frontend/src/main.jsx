@@ -11,7 +11,6 @@ import ModelViewer from './Components/Herb/Modelviewer.jsx'
 import Login from './Components/Login/Login.jsx'
 import Signup from './Components/Signup/Signup.jsx'
 import Favourite from './Components/Favourite/Favourite.jsx'
-import AboutUs from './Components/AboutUS/Aboutus.jsx'
 import { AuthProvider } from "./context/AuthContext.jsx";  // Note: Use named import with curly braces
 import AdminDashboard from './Components/Admin/AdminDashboard.jsx'
 import AboutUs from './Components/About/About.jsx'
