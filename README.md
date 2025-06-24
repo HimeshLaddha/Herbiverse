@@ -1,5 +1,3 @@
-### 🌿 HerbiVerse README
-
 # 🌿 HerbiVerse
 
 > An Interactive Learning & Information Hub for herbal plants 🌱
