@@ -11,7 +11,6 @@ HerbiVerse helps users explore the medicinal world of herbs through detailed inf
 
 - Explore 2D & 3D visualizations of plants
 - Searchable plant database with descriptions & scientific names
-- Admin dashboard for CRUD operations on plant info
 - Virtual Herbal Garden with immersive UI
 
 ## 🧠 Tech Stack
