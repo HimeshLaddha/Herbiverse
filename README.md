@@ -1,11 +1,11 @@
 ### 🌿 HerbiVerse README
 
-```md
 # 🌿 HerbiVerse
 
 > An Interactive Learning & Information Hub for herbal plants 🌱
 
 HerbiVerse helps users explore the medicinal world of herbs through detailed info, immersive 2D/3D plant models, and personalized plant care tips. Built to educate and empower green enthusiasts.
+- Live Demo - https://herbiverse.vercel.app/
 
 ## 🚀 Features
 
@@ -21,14 +21,9 @@ HerbiVerse helps users explore the medicinal world of herbs through detailed inf
 - **Database:** MongoDB
 - **Others:** React Router, Axios
 
-## 📸 Screenshots
-
-_(Add images of your UI & admin dashboard here)_
-
 ## 🛠️ Installation
 
-```bash
-git clone https://github.com/your-username/herbiverse.git
-cd herbiverse
-npm install
-npm run dev
+- git clone https://github.com/your-username/herbiverse.git
+- cd herbiverse
+- npm install
+- npm run dev
